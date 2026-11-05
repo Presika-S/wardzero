@@ -1,0 +1,26 @@
+services:
+  api:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      WZ_DB_URL: sqlite:////data/wardzero.db          # Postgres-ready: postgresql+psycopg://user:pw@db/wardzero
+      WZ_NTFY_URL: ${WZ_NTFY_URL:-}                   # optional: http://ntfy:80 for REAL phone push
+    volumes: ["wz-data:/data"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  simulator:                                          # the simulated bedside device + gateway (store-and-forward buffer)
+    build: .
+    command: ["python", "-m", "wardzero.simulator"]
+    environment: { WZ_API_URL: "http://api:8000" }
+    depends_on: { api: { condition: service_healthy } }
+    restart: unless-stopped
+  ntfy:                                               # optional real push:  docker compose --profile push up
+    image: binwiederhier/ntfy
+    command: ["serve"]
+    ports: ["8080:80"]
+    profiles: ["push"]
+volumes:
+  wz-data:

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WardZero Core — home monitoring prototype</title><link rel="stylesheet" href="/static/style.css"></head>
+<body>
+<div id="gate"><div class="box"><h1>🛏️ WardZero <span style="color:var(--teal)">Core</span></h1>
+<p>A hospital that fits inside a bedroom — <b>experimental prototype, synthetic data only, not a medical device.</b></p>
+<p>Click to start the monitoring session. This also enables the <b>alarm siren</b> (browsers block sound until you interact) and push notifications.</p>
+<button id="startBtn" class="btn pri">▶ Start monitoring session</button></div></div>
+<div id="siren" class="hidden"><div class="panel"><div style="font-size:54px">🚨</div><h1>CRITICAL ALERT</h1>
+<div class="why" id="sirenWhy"></div><div class="esc" id="sirenEsc"></div><button id="sirenAck" class="btn">ACKNOWLEDGE</button></div></div>
+<header class="top">
+ <div class="logo">Ward<i>Zero</i> Core</div>
+ <div class="pt"><b id="ptName">—</b><small id="ptSub">—</small></div>
+ <div class="sp"></div>
+ <div class="pt" style="text-align:right"><b id="simClock">—</b><small id="devInfo">device —</small></div>
+ <div id="statusPill" class="pill IDLE"><span class="dot"></span><span id="statusTxt">Waiting for device…</span></div>
+ <label class="mut" style="font-size:12px">Acting as <select id="acting"></select></label>
+ <button id="muteBtn" class="btn sm" title="Mute siren">🔊</button>
+</header>
+<div class="banner">⚠ EXPERIMENTAL PROTOTYPE — NOT A MEDICAL DEVICE. Synthetic data only. Thresholds are illustrative. No diagnosis is made.</div>
+<div id="judgebar" class="hidden"><div class="steps" id="judgeSteps"></div><div class="cap" id="judgeCap"></div></div>
+<div id="offline" class="banner hidden" style="background:#450a0a;color:#fecaca">Dashboard lost its connection to the server — reconnecting…</div>
+<nav class="tabs"><button data-t="live" class="act">Live monitor</button><button data-t="caregiver">Caregiver view</button>
+<button data-t="audit">Audit log</button><button data-t="model">Risk model</button><button data-t="safety">Safety &amp; limits</button></nav>
+<main>
+<section id="tab-live">
+ <div class="grid g5" id="vitals"></div>
+ <div class="grid g2" style="margin-top:14px">
+  <div class="grid" style="align-content:start">
+   <div class="card"><h3><span>Deterioration risk · 24–48h outlook</span><span class="mut" id="riskSub"></span></h3><div id="risk"></div></div>
+   <div class="card trend"><h3><span>Model risk vs. a snapshot early-warning score</span><span class="mut">line = risk · bars = score</span></h3><div id="trend"></div></div>
+  </div>
+  <div class="card" style="align-self:start"><h3><span>Alert feed &amp; closed-loop escalation</span><span class="mut" id="alertCount"></span></h3><div id="alerts"></div></div>
+ </div>
+ <div class="grid g3" style="margin-top:14px">
+  <div class="card"><h3>Demo control panel</h3>
+   <div class="ctl"><span class="lab">Patient physiology</span>
+    <button class="btn" data-c='{"physio":"stable"}' data-k="physio:stable">Stable</button>
+    <button class="btn" data-c='{"physio":"slow_deterioration"}' data-k="physio:slow_deterioration">Slow deterioration</button>
+    <button class="btn" data-c='{"physio":"acute_event"}' data-k="physio:acute_event">Acute event</button>
+    <span class="lab">Faults &amp; reliability</span>
+    <button class="btn" id="bFault">Sensor fault</button><button class="btn" id="bFlat">Flatline</button>
+    <button class="btn" id="bLink">Simulate network outage</button><button class="btn" id="bPower">Power loss</button>
+    <span class="lab">Simulation speed (1 reading = 15 sim-min)</span>
+    <button class="btn sm" data-sp="1">1×</button><button class="btn sm" data-sp="2">2×</button><button class="btn sm" data-sp="4">4×</button><button class="btn sm" data-sp="8">8×</button>
+    <span class="lab">Session</span>
+    <button class="btn pri" id="bJudge" style="padding:9px 16px;font-size:14px">▶ Judge Mode (auto demo)</button>
+    <button class="btn danger" id="bReset">Reset</button></div></div>
+  <div class="card"><h3>Caregiver response</h3><div class="metrics" id="metrics"></div>
+   <h3 style="margin-top:14px">Alarm-fatigue ledger <span class="mut">why the siren stays quiet</span></h3><div class="led" id="ledger"></div></div>
+  <div class="card"><h3>Context: caregiver notes</h3>
+   <textarea id="noteTxt" placeholder="e.g. 'dizzy and not eating since morning' · தமிழ் / हिन्दी also work"></textarea>
+   <div class="ctl" style="margin-top:6px"><button class="btn sm" id="noteAdd">Add note</button>
+    <button class="btn sm" data-note="She is dizzy and not eating">dizzy + not eating</button>
+    <button class="btn sm" data-note="அம்மா மூச்சுத் திணறல், சாப்பிடவில்லை">தமிழ்</button>
+    <button class="btn sm" data-note="बुखार और चक्कर, खाना नहीं खाया">हिन्दी</button></div>
+   <div id="notes" style="font-size:13px"></div></div>
+ </div>
+</section>
+<section id="tab-caregiver" class="hidden"><div class="grid g2"><div><div class="phone"><div class="mut" style="text-align:center;font-size:12px;margin-bottom:8px">📱 <b id="phoneWho"></b>'s phone</div><div id="phone"></div></div></div>
+ <div class="card"><h3>Attendance &amp; activity</h3><div id="attend"></div><p class="mut" style="font-size:12.5px">Check-ins and every acknowledge/respond/resolve are logged with timestamps in the audit trail.</p></div></div></section>
+<section id="tab-audit" class="hidden"><div class="card"><h3><span>Hash-chained audit log (every alert and every action)</span><span><span id="verify" class="chip"></span> <button class="btn sm" id="bVerify">Verify chain</button></span></h3><div style="overflow:auto"><table id="auditT"></table></div></div></section>
+<section id="tab-model" class="hidden"><div class="card" id="modelC">Loading…</div></section>
+<section id="tab-safety" class="hidden"><div class="card safety" id="safetyC"></div></section>
+</main>
+<div id="toasts"></div>
+<script src="/static/app.js"></script></body></html>
