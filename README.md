@@ -185,4 +185,4 @@ Python 3.12, FastAPI, SQLAlchemy (SQLite, Postgres-ready), scikit-learn, NumPy, 
 
 ## 15. Credits and License
 
-Developed by **Presika S** ([@Presika-S](https://github.com/Presika-S)) for Operation Ward Zero. Built with FastAPI, SQLAlchemy, scikit-learn, NumPy, uvicorn and, optionally, ntfy. The NEWS2 band structure follows the Royal College of Physicians' published chart and is used only as an illustrative, partial safety floor. AI-assisted development tools were used; the team understands and can explain the implementation.
+Developed by our team NEXORA for Operation Ward Zero. Built with FastAPI, SQLAlchemy, scikit-learn, NumPy, uvicorn and, optionally, ntfy. The NEWS2 band structure follows the Royal College of Physicians' published chart and is used only as an illustrative, partial safety floor. AI-assisted development tools were used; the team understands and can explain the implementation.
