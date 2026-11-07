@@ -1,0 +1,62 @@
+{
+  "model": "StandardScaler + LogisticRegression (interpretable; contributions are exact)",
+  "trained_on": "256 synthetic episodes; evaluated on 64 held-out synthetic episodes",
+  "features": [
+    "temp_slope6",
+    "temp_delta6",
+    "temp_std6",
+    "temp_frac12",
+    "hr_slope6",
+    "hr_delta6",
+    "hr_std6",
+    "hr_frac12",
+    "sbp_slope6",
+    "sbp_delta6",
+    "sbp_std6",
+    "sbp_frac12",
+    "spo2_slope6",
+    "spo2_delta6",
+    "spo2_std6",
+    "spo2_frac12",
+    "news2_now",
+    "news2_max6"
+  ],
+  "coefficients": {
+    "temp_slope6": 0.438,
+    "temp_delta6": 1.549,
+    "temp_std6": -0.611,
+    "temp_frac12": -2.023,
+    "hr_slope6": 0.64,
+    "hr_delta6": 2.727,
+    "hr_std6": -0.283,
+    "hr_frac12": -0.788,
+    "sbp_slope6": -0.485,
+    "sbp_delta6": -2.826,
+    "sbp_std6": -0.007,
+    "sbp_frac12": -0.159,
+    "spo2_slope6": -0.595,
+    "spo2_delta6": -3.154,
+    "spo2_std6": 0.403,
+    "spo2_frac12": -0.301,
+    "news2_now": 0.215,
+    "news2_max6": -0.43
+  },
+  "bands": {
+    "medium": 0.3,
+    "high": 0.65
+  },
+  "metrics_synthetic": {
+    "auroc": 0.984,
+    "episodes_with_early_warning": "30/30",
+    "median_lead_time_hours_before_event": 32.9,
+    "episodes_without_deterioration_that_still_raised_alert": "9/34",
+    "persistence_rule": "6 consecutive readings at Medium or above"
+  },
+  "limitations": [
+    "Labels come from our own simulator: metrics show the pipeline works, NOT clinical accuracy.",
+    "Partial NEWS2-style inputs only (no respiratory rate, consciousness, oxygen).",
+    "Not validated on any real patient data. Not a medical device. No diagnosis is made."
+  ],
+  "trained_at": "2026-11-03T09:01:25Z",
+  "seconds": 15.4
+}
