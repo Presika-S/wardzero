@@ -9,7 +9,7 @@ Submission for *Operation Ward Zero* (Nursio Innovation × Wooble): **Sense → 
 |---|---|
 | Live UI demo (browser-only, synthetic data) | https://wardzero.vercel.app/ |
 | Source code | https://github.com/Presika-S/wardzero |
-| Demonstration video (~3 min) | _add link before submission_ |
+| Demonstration video (~3 min) |https://youtu.be/AnakjnsBGm8?si=eA1DVZSYo3GRx0sQ|
 | Technical documentation | [`docs/TECHNICAL.md`](docs/TECHNICAL.md) |
 | Model card (synthetic data) | [`docs/model_card.json`](docs/model_card.json) |
 
@@ -131,7 +131,7 @@ flowchart LR
 | A | Working prototype | Integrated: `docker compose up` → http://localhost:8000. UI demo: https://wardzero.vercel.app/ |
 | B | Source repository (code, README, setup, dependencies, sample data) | This repository; `requirements.txt`; `sample_data/` (four synthetic CSV scenarios) |
 | C | Technical documentation | [`docs/TECHNICAL.md`](docs/TECHNICAL.md) |
-| D | Demonstration video (~3 min) | Link at the top of this file; script in [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) |
+| D | Demonstration video (~3 min) | https://youtu.be/AnakjnsBGm8?si=eA1DVZSYo3GRx0sQ; script in [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) |
 
 ## 8. Model Card (Synthetic Data)
 
